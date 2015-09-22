@@ -8,18 +8,72 @@
 
 import UIKit
 
+var number1 = ""
+var number2 = ""
+var operation: OperationType?
+
+// Normal :
+// Change the sign +/-
+// remove the decimal if .0
+
+// Medium:
+// add label on the left side of display to show current operation
+
+// Hard :
+// make decimal button work
+
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    @IBOutlet weak var displayLabel: UILabel!
+    
+    @IBAction func NumberPressed(button: UIButton) {
+        
+        let num = button.titleLabel!.text!
+        
+        if operation == nil {
+            
+            number1 += num
+            displayLabel.text = number1
+            
+        } else {
+            
+            number2 += num
+            displayLabel.text = number2
+        }
+    }
+    
+    
+    @IBAction func clear() {
+        
+        number1 = ""
+        number2 = ""
+        displayLabel.text = "0"
+        
+    }
+    
+    @IBAction func changeSign() {
+        
+    }
+    
+    @IBAction func setOperation(button: UIButton) {
+        
+        let opSign = button.titleLabel!.text!
+        operation = OperationType(rawValue: opSign)
+    
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func runOperation() {
+        
+        let num1 = Double(number1)
+        let num2 = Double(number2)
+        
+        let total = calculateNumbers(n1: num1!, n2: num2!, operation: operation!)
+        
+        number1 = "\(total)"
+        displayLabel.text = "\(total)"
+        
     }
-
-
+    
 }
+
 
