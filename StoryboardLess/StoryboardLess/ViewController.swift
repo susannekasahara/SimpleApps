@@ -1,24 +1,10 @@
-//
-//  ViewController.swift
-//  StoryboardLess
-//
-//  Created by Susanne Burnham on 9/24/15.
-//  Copyright © 2015 Susanne Kasahara. All rights reserved.
-//
+//ViewController.swift  StoryboardLess
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController : UIViewController {
     
     var grid = [[0,0,0],[0,0,0],[0,0,0]]
-    
-    //grid[0][0] = grid[row][col]
-    
-    //player turn
-    //scores (1, 2 stalemate)
-    //reset scores
-    //reset board
-    //chosen space
     
     var isPlayer1Turn = true
     
@@ -26,21 +12,53 @@ class ViewController: UIViewController {
     var player2Score = 0
     var stalemateScore = 0
     
+    let gameStatusLabel = UILabel(frame: CGRect(x: 0, y: 100, width: 200, height: 50))
+    
+    let gameScoreLabel = UILabel(frame: CGRect(x: 0, y: 50, width: 200, height: 50))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+       
+        view.backgroundColor = UIColor.whiteColor()
+        
+        
+        gameStatusLabel.text = "Player 1 Turn"
+        gameStatusLabel.textAlignment = .Center
+        
+        
+        gameStatusLabel.center.x = view.center.x
+        
+        view.addSubview(gameStatusLabel)
         
         view.backgroundColor = UIColor.whiteColor()
         
+        
+        gameScoreLabel.text = "Score"
+        gameScoreLabel.textAlignment = .Center
+        
+        
+        gameScoreLabel.center.x = view.center.x //WHERE TO PUT THE BUTTON
+        
+        view.addSubview(gameScoreLabel)
         // grid[0]
+        let screenHeight = Int(UIScreen.mainScreen().bounds.height)
+        let screenWidth = Int(UIScreen.mainScreen().bounds.width)
+        
+        let buttonHW = 100
+        let buttonSpacing = 4
+        
+        let gridHW = (buttonHW * 3) + (buttonSpacing * 2)
+        
+        let leftspacing = (screenWidth - gridHW) / 2
+        let topSpacing = (screenHeight - gridHW) / 2
         
         for (r,row) in grid.enumerate() {
             
             
             for (c,_) in row.enumerate() {
                 
-                let x = c * 110
-                let y = r * 110
+                let x = c * (buttonHW + buttonSpacing) + leftspacing
+                let y = r * (buttonHW + buttonSpacing) + topSpacing
                 
                 let button1 = TTTButton(frame: CGRect(x: x, y: y, width: 100, height: 100))
                 button1.backgroundColor = UIColor.cyanColor()
@@ -51,54 +69,18 @@ class ViewController: UIViewController {
                 
                 button1.addTarget(self, action: "spacePressed:", forControlEvents:.TouchUpInside)
                 view.addSubview(button1) //event listener
-                
             }
-            
         }
-        
-        
-        
-        //        let button2 = TTTButton(frame: CGRect(x: 110, y: 0, width: 100, height: 100))
-        //        button2.backgroundColor = UIColor.cyanColor()
-        //
-        //        //      button1.tag = 0
-        //        button2.row = 0
-        //        button2.col = 1
-        //
-        //        button2.addTarget(self, action: "spacePressed:", forControlEvents:.TouchUpInside)
-        //        view.addSubview(button2) //event listener
-        //
-        //        let button3 = TTTButton(frame: CGRect(x: 220, y: 0, width: 100, height: 100))
-        //        button3.backgroundColor = UIColor.cyanColor()
-        //
-        //        //      button1.tag = 0
-        //        button3.row = 0
-        //        button3.col = 2
-        //
-        //        button3.addTarget(self, action: "spacePressed:", forControlEvents:.TouchUpInside)
-        //        view.addSubview(button3) //event listener
-        
-        
     }
-    
     func spacePressed(button: TTTButton) {
         
         if button.player == 0 {
-            
-            //            if isPlayer1Turn {
-            
-            //                button.player = 1
-            
-            //            }else{
-            
-            //                button.player = 2
-            
-            //
-        }
+}
         
         button.player = isPlayer1Turn ? 1 : 2
         
         grid[button.row][button.col] = isPlayer1Turn ? 1 : 2
+        
         
         isPlayer1Turn = !isPlayer1Turn
         
@@ -175,6 +157,8 @@ class TTTButton: UIButton {
             case 1 : backgroundColor = UIColor.magentaColor()
             case 2 : backgroundColor = UIColor.yellowColor()
             default : backgroundColor = UIColor.cyanColor()
+                
+    
                 
             }
             
